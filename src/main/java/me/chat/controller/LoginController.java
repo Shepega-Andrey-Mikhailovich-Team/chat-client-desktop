@@ -2,6 +2,7 @@ package me.chat.controller;
 
 import com.jfoenix.controls.JFXRippler;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -51,21 +52,25 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    protected void buttonClickEvent() throws IOException {
+    protected void buttonClickEvent(ActionEvent event) throws IOException {
         this.fireEvent();
-        Parent root = FXMLLoader.load(getClass().getResource("assets/Chat.fxml"));
-        Scene scene = new Scene(root);
-        Stage primaryStage = new Stage();
-        primaryStage.setTitle("New Window");
-        primaryStage.setScene(scene);
-        primaryStage.initModality(Modality.WINDOW_MODAL);
-        primaryStage.initOwner(button.getScene().getWindow());
-        primaryStage.show();
     }
 
     @FXML
     protected void hyperlink() throws URISyntaxException, IOException {
         Desktop.getDesktop().browse(new URI("https://github.com/Shepega-Andrey-Mikhailovich-Team"));
+    }
+
+    @FXML
+    public void handleNewWindow() throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("assets/Chat.fxml"));
+        Scene scene = new Scene(root);
+        Stage primaryStage = new Stage();
+        primaryStage.setTitle("New Window");
+        primaryStage.setScene(scene);
+// specifies the modality foranew window
+        primaryStage.initModality(Modality.APPLICATION_MODAL);// default
+        primaryStage.show();
     }
 
     private void fireEvent() {
