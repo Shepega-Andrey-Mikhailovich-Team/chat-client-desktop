@@ -3,7 +3,10 @@ package me.chat.controller;
 import com.jfoenix.controls.JFXRippler;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextField;
@@ -12,6 +15,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.web.WebView;
+import javafx.stage.Stage;
 import me.chat.ChatClientMain;
 import me.chat.event.PlayerJoinEvent;
 
@@ -48,6 +52,17 @@ public class LoginController implements Initializable {
     @FXML
     protected void buttonClickEvent() {
         this.fireEvent();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("newchat.fxml"));
+            Parent root1 = (Parent) fxmlLoader.load();
+            Stage stage = new Stage();
+            //stage.initStyle(StageStyle.TRANSPARENT);
+            stage.setTitle("Chat");
+            stage.setScene(new Scene(root1));
+            stage.show();
+        } catch (Exception e) {
+            System.out.println("Cant load new window");
+        }
     }
 
     @FXML
