@@ -15,6 +15,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import javafx.scene.web.WebView;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import me.chat.ChatClientMain;
 import me.chat.event.PlayerJoinEvent;
@@ -50,19 +51,16 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    protected void buttonClickEvent() {
+    protected void buttonClickEvent() throws IOException {
         this.fireEvent();
-        try {
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("newchat.fxml"));
-            Parent root1 = (Parent) fxmlLoader.load();
-            Stage stage = new Stage();
-            //stage.initStyle(StageStyle.TRANSPARENT);
-            stage.setTitle("Chat");
-            stage.setScene(new Scene(root1));
-            stage.show();
-        } catch (Exception e) {
-            System.out.println("Cant load new window");
-        }
+        Parent root = FXMLLoader.load(getClass().getResource("assets/Chat.fxml"));
+        Scene scene = new Scene(root);
+        Stage primaryStage = new Stage();
+        primaryStage.setTitle("New Window");
+        primaryStage.setScene(scene);
+        primaryStage.initModality(Modality.WINDOW_MODAL);
+        primaryStage.initOwner(button.getScene().getWindow());
+        primaryStage.show();
     }
 
     @FXML
