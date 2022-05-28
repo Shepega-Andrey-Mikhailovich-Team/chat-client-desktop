@@ -2,15 +2,23 @@ package me.chat.controller;
 
 import com.jfoenix.controls.JFXRippler;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import me.chat.ChatClientMain;
+import me.chat.common.IOHelper;
 import me.chat.event.PlayerJoinEvent;
 
 import java.awt.*;
@@ -30,7 +38,7 @@ public class LoginController implements Initializable {
 
     @FXML
     private Pane pane;
-    
+
     @FXML
     protected void enterPressedEvent(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER)
@@ -38,8 +46,28 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    protected void buttonClickEvent() {
+    protected void buttonClickEvent() throws IOException {
         this.fireEvent();
+        Stage stage1 = (Stage) pane.getScene().getWindow();
+        stage1.hide();
+        Stage stage = new Stage();
+        stage.initStyle(StageStyle.UNDECORATED);
+        stage.initStyle(StageStyle.TRANSPARENT);
+
+        FXMLLoader fxmlLoader = new FXMLLoader(IOHelper.getResourceURL("dialog/chat.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 570, 370, Color.TRANSPARENT);
+        scene.getStylesheets().add(IOHelper.getResourceURL("dialog/chat.css").toExternalForm());
+
+        // Move handler
+        scene.setOnMousePressed(pressEvent -> scene.setOnMouseDragged(dragEvent -> {
+            stage.setX(dragEvent.getScreenX() - pressEvent.getSceneX());
+            stage.setY(dragEvent.getScreenY() - pressEvent.getSceneY());
+        }));
+
+        stage.getIcons().add(new Image(IOHelper.getResourceURL("assets/img/logo.png").toString()));
+        stage.setTitle("Chat");
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
@@ -48,8 +76,9 @@ public class LoginController implements Initializable {
     }
 
     private void fireEvent() {
-        if (!this.textbox.getText().isEmpty())
+        if (!this.textbox.getText().isEmpty()) {
             ChatClientMain.EVENT_BUS.unsafeFireAndForget(new PlayerJoinEvent(this.textbox.getText()));
+        }
     }
 
     @FXML
@@ -65,5 +94,8 @@ public class LoginController implements Initializable {
         jfxRippler.setLayoutX(99);
         jfxRippler.setLayoutY(228);
         pane.getChildren().add(jfxRippler);
+    }
+
+    public void handleNewWindow(ActionEvent actionEvent) {
     }
 }

@@ -13,9 +13,9 @@ import java.io.IOException;
 
 public class LoginDialog extends Application {
 
+
     @Override
     public void start(Stage stage) throws IOException {
-
         // Видаляємо window decoration
         stage.initStyle(StageStyle.UNDECORATED);
         stage.initStyle(StageStyle.TRANSPARENT);
@@ -35,4 +35,6 @@ public class LoginDialog extends Application {
         stage.setScene(scene);
         stage.show();
     }
+
+
 }
