@@ -2,22 +2,14 @@ package me.chat.controller;
 
 import com.jfoenix.controls.JFXRippler;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
-import javafx.scene.web.WebView;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
 import me.chat.ChatClientMain;
 import me.chat.event.PlayerJoinEvent;
 
@@ -38,13 +30,7 @@ public class LoginController implements Initializable {
 
     @FXML
     private Pane pane;
-
-    @FXML
-    private Hyperlink hyperlink;
-
-    @FXML
-    private WebView webView;
-
+    
     @FXML
     protected void enterPressedEvent(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER)
@@ -52,25 +38,13 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    protected void buttonClickEvent(ActionEvent event) throws IOException {
+    protected void buttonClickEvent() {
         this.fireEvent();
     }
 
     @FXML
     protected void hyperlink() throws URISyntaxException, IOException {
         Desktop.getDesktop().browse(new URI("https://github.com/Shepega-Andrey-Mikhailovich-Team"));
-    }
-
-    @FXML
-    public void handleNewWindow() throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("assets/Chat.fxml"));
-        Scene scene = new Scene(root);
-        Stage primaryStage = new Stage();
-        primaryStage.setTitle("New Window");
-        primaryStage.setScene(scene);
-// specifies the modality foranew window
-        primaryStage.initModality(Modality.APPLICATION_MODAL);// default
-        primaryStage.show();
     }
 
     private void fireEvent() {

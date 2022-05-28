@@ -1,6 +1,6 @@
 package me.chat;
 
-import me.chat.dialog.LoginDialog;
+import me.chat.dialog.ChatDialog;
 import me.chat.event.PlayerJoinEvent;
 import me.chat.listener.PlayerListener;
 import me.chat.ssbus.Bus;
@@ -11,6 +11,6 @@ public class ChatClientMain {
 
     public static void main(String[] args) {
         EVENT_BUS.register(PlayerListener.class);
-        LoginDialog.launch(LoginDialog.class, args);
+        ChatDialog.launch(ChatDialog.class, args);
     }
 }
