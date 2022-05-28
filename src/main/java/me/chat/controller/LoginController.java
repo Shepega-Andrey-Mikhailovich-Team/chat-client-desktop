@@ -14,7 +14,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import me.chat.ChatClientMain;
 import me.chat.event.PlayerJoinEvent;
-import javafx.scene.web.WebView;
+
 import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
@@ -36,8 +36,6 @@ public class LoginController implements Initializable {
     @FXML
     private Hyperlink hyperlink;
 
-    @FXML
-    private WebView webView;
 
     @FXML
     protected void enterPressedEvent(KeyEvent event) {
@@ -51,7 +49,7 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    void hyperlink(ActionEvent event)throws URISyntaxException, IOException {
+    void hyperlink(ActionEvent event) throws URISyntaxException, IOException {
         System.out.println("link clicked!");
         Desktop.getDesktop().browse(new URI("https://github.com/Shepega-Andrey-Mikhailovich-Team"));
     }

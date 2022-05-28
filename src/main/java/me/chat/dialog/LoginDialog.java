@@ -3,11 +3,13 @@ package me.chat.dialog;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import me.chat.common.IOHelper;
 
+import java.io.File;
 import java.io.IOException;
 
 public class LoginDialog extends Application {
@@ -28,7 +30,9 @@ public class LoginDialog extends Application {
             stage.setX(dragEvent.getScreenX() - pressEvent.getSceneX());
             stage.setY(dragEvent.getScreenY() - pressEvent.getSceneY());
         }));
-
+        File file = new File("C:\\Users\\RubyXGod\\Documents\\GitHub\\chat-client-desktop\\src\\main\\icons\\img.png");
+        Image image = new Image(file.toURI().toString());
+        stage.getIcons().add(image);
         stage.setTitle("Chat");
         stage.setScene(scene);
         stage.show();
