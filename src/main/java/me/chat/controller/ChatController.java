@@ -1,5 +1,11 @@
 package me.chat.controller;
 
-public class ChatController {
+import javafx.application.Platform;
+import javafx.fxml.FXML;
 
+public class ChatController {
+    @FXML
+    protected void onButtonClick() {
+        Platform.exit();
+    }
 }

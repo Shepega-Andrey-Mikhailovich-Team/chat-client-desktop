@@ -55,7 +55,7 @@ public class LoginController implements Initializable {
         stage.initStyle(StageStyle.TRANSPARENT);
 
         FXMLLoader fxmlLoader = new FXMLLoader(IOHelper.getResourceURL("dialog/chat.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 570, 370, Color.TRANSPARENT);
+        Scene scene = new Scene(fxmlLoader.load(), 604, 440, Color.TRANSPARENT);
         scene.getStylesheets().add(IOHelper.getResourceURL("dialog/chat.css").toExternalForm());
 
         // Move handler

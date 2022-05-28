@@ -1,0 +1,29 @@
+#pane {
+    -fx-background-color: #191919;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+}
+
+#button {
+    -fx-alignment: center;
+    -fx-background-radius: 5;
+    -fx-background-color: NULL;
+
+    -fx-font-size: 24;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 5, 0.0, 0, 1);
+}
+
+#label1 {
+    -fx-text-fill: #FDEBAE;
+}
+
+#txtFl {
+    -fx-background-color: #FDEBAE;
+    -fx-background-radius: 15;
+    -fx-border-radius: 15;
+}
+
+.label {
+    -fx-text-fill: #E58D57;
+}
+
