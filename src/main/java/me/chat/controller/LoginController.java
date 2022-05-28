@@ -2,9 +2,11 @@ package me.chat.controller;
 
 import com.jfoenix.controls.JFXRippler;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -12,7 +14,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Paint;
 import me.chat.ChatClientMain;
 import me.chat.event.PlayerJoinEvent;
-
+import javafx.scene.web.WebView;
+import java.awt.*;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -28,6 +34,12 @@ public class LoginController implements Initializable {
     private Pane pane;
 
     @FXML
+    private Hyperlink hyperlink;
+
+    @FXML
+    private WebView webView;
+
+    @FXML
     protected void enterPressedEvent(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER)
             this.fireEvent();
@@ -36,6 +48,12 @@ public class LoginController implements Initializable {
     @FXML
     protected void buttonClickEvent() {
         this.fireEvent();
+    }
+
+    @FXML
+    void hyperlink(ActionEvent event)throws URISyntaxException, IOException {
+        System.out.println("link clicked!");
+        Desktop.getDesktop().browse(new URI("https://github.com/Shepega-Andrey-Mikhailovich-Team"));
     }
 
     private void fireEvent() {

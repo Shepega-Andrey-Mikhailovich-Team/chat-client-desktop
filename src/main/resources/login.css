@@ -34,6 +34,13 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 5, 0.0, 0, 1);
 }
 
+#link1 {
+    -fx-alignment: center;
+    -fx-text-fill: #FDEBAE;
+    -fx-font-size: 13;
+    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.6), 5, 0.0, 0, 1);
+}
+
 #exit {
     -fx-text-fill: #FD824E;
     -fx-font-size: 12;
