@@ -17,8 +17,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import lombok.SneakyThrows;
 import me.chat.ChatClientMain;
 import me.chat.common.IOHelper;
+import me.chat.common.VerifyHelper;
 import me.chat.event.PlayerJoinEvent;
 
 import java.awt.*;
@@ -29,6 +31,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
+
+    private Stage chatStage;
 
     @FXML
     private TextField textbox;
@@ -47,27 +51,9 @@ public class LoginController implements Initializable {
 
     @FXML
     protected void buttonClickEvent() throws IOException {
-        this.fireEvent();
-        Stage stage1 = (Stage) pane.getScene().getWindow();
-        stage1.hide();
-        Stage stage = new Stage();
-        stage.initStyle(StageStyle.UNDECORATED);
-        stage.initStyle(StageStyle.TRANSPARENT);
-
-        FXMLLoader fxmlLoader = new FXMLLoader(IOHelper.getResourceURL("dialog/chat.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 604, 440, Color.TRANSPARENT);
-        scene.getStylesheets().add(IOHelper.getResourceURL("dialog/chat.css").toExternalForm());
-
-        // Move handler
-        scene.setOnMousePressed(pressEvent -> scene.setOnMouseDragged(dragEvent -> {
-            stage.setX(dragEvent.getScreenX() - pressEvent.getSceneX());
-            stage.setY(dragEvent.getScreenY() - pressEvent.getSceneY());
-        }));
-
-        stage.getIcons().add(new Image(IOHelper.getResourceURL("assets/img/logo.png").toString()));
-        stage.setTitle("Chat");
-        stage.setScene(scene);
-        stage.show();
+        if (!this.fireEvent()) return;
+        Stage primaryStage = (Stage) pane.getScene().getWindow();
+        primaryStage.setScene(this.chatStage.getScene());
     }
 
     @FXML
@@ -75,10 +61,15 @@ public class LoginController implements Initializable {
         Desktop.getDesktop().browse(new URI("https://github.com/Shepega-Andrey-Mikhailovich-Team"));
     }
 
-    private void fireEvent() {
-        if (!this.textbox.getText().isEmpty()) {
+    private boolean fireEvent() {
+        if (!this.textbox.getText().isEmpty() && VerifyHelper.isValidIDName(this.textbox.getText())) {
             ChatClientMain.EVENT_BUS.unsafeFireAndForget(new PlayerJoinEvent(this.textbox.getText()));
+            return true;
         }
+
+        // shake textbox and label
+
+        return false;
     }
 
     @FXML
@@ -86,6 +77,7 @@ public class LoginController implements Initializable {
         Platform.exit();
     }
 
+    @SneakyThrows
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // Добавляємо Ripple ефект на кнопку
@@ -94,6 +86,24 @@ public class LoginController implements Initializable {
         jfxRippler.setLayoutX(99);
         jfxRippler.setLayoutY(228);
         pane.getChildren().add(jfxRippler);
+
+        this.chatStage = new Stage();
+        this.chatStage.initStyle(StageStyle.UNDECORATED);
+        this.chatStage.initStyle(StageStyle.TRANSPARENT);
+
+        FXMLLoader fxmlLoader = new FXMLLoader(IOHelper.getResourceURL("dialog/chat.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 604, 440, Color.TRANSPARENT);
+        scene.getStylesheets().add(IOHelper.getResourceURL("dialog/chat.css").toExternalForm());
+
+        // Move handler
+        scene.setOnMousePressed(pressEvent -> scene.setOnMouseDragged(dragEvent -> {
+            this.chatStage.setX(dragEvent.getScreenX() - pressEvent.getSceneX());
+            this.chatStage.setY(dragEvent.getScreenY() - pressEvent.getSceneY());
+        }));
+
+        this.chatStage.getIcons().add(new Image(IOHelper.getResourceURL("assets/img/logo.png").toString()));
+        this.chatStage.setTitle("Chat");
+        this.chatStage.setScene(scene);
     }
 
     public void handleNewWindow(ActionEvent actionEvent) {
