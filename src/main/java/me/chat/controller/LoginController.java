@@ -43,6 +43,10 @@ public class LoginController implements Initializable {
     @FXML
     private Pane pane;
 
+
+    @FXML
+    private TextArea txtArea;
+
     @FXML
     protected void enterPressedEvent(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER)
