@@ -9,14 +9,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import lombok.SneakyThrows;
 import me.chat.common.IOHelper;
 import me.chat.common.VerifyHelper;
@@ -30,7 +28,7 @@ import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
 
-    private Stage chatStage;
+    private Scene chatScene;
 
     @FXML
     private TextField textbox;
@@ -54,7 +52,15 @@ public class LoginController implements Initializable {
     protected void buttonClickEvent() {
         if (!this.fireEvent()) return;
         Stage primaryStage = (Stage) pane.getScene().getWindow();
-        primaryStage.setScene(this.chatStage.getScene());
+        if (this.chatScene != null) {
+            primaryStage.setScene(this.chatScene);
+            
+            // Move handler
+            this.chatScene.setOnMousePressed(pressEvent -> chatScene.setOnMouseDragged(dragEvent -> {
+                primaryStage.setX(dragEvent.getScreenX() - pressEvent.getSceneX());
+                primaryStage.setY(dragEvent.getScreenY() - pressEvent.getSceneY());
+            }));
+        }
     }
 
     @FXML
@@ -88,23 +94,9 @@ public class LoginController implements Initializable {
         jfxRippler.setLayoutY(228);
         pane.getChildren().add(jfxRippler);
 
-        this.chatStage = new Stage();
-        this.chatStage.initStyle(StageStyle.UNDECORATED);
-        this.chatStage.initStyle(StageStyle.TRANSPARENT);
-
         FXMLLoader fxmlLoader = new FXMLLoader(IOHelper.getResourceURL("dialog/chat.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 604, 440, Color.TRANSPARENT);
-        scene.getStylesheets().add(IOHelper.getResourceURL("dialog/chat.css").toExternalForm());
-
-        // Move handler
-        scene.setOnMousePressed(pressEvent -> scene.setOnMouseDragged(dragEvent -> {
-            this.chatStage.setX(dragEvent.getScreenX() - pressEvent.getSceneX());
-            this.chatStage.setY(dragEvent.getScreenY() - pressEvent.getSceneY());
-        }));
-
-        this.chatStage.getIcons().add(new Image(IOHelper.getResourceURL("assets/img/logo.png").toString()));
-        this.chatStage.setTitle("Chat");
-        this.chatStage.setScene(scene);
+        this.chatScene = new Scene(fxmlLoader.load(), 604, 440, Color.TRANSPARENT);
+        this.chatScene.getStylesheets().add(IOHelper.getResourceURL("dialog/chat.css").toExternalForm());
     }
 
     public void handleNewWindow(ActionEvent actionEvent) {
