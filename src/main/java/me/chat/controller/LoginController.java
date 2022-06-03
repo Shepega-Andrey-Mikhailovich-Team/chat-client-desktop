@@ -18,10 +18,8 @@ import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import lombok.SneakyThrows;
-import me.chat.ChatClientMain;
 import me.chat.common.IOHelper;
 import me.chat.common.VerifyHelper;
-import me.chat.event.PlayerJoinEvent;
 
 import java.awt.*;
 import java.io.IOException;
@@ -43,7 +41,6 @@ public class LoginController implements Initializable {
     @FXML
     private Pane pane;
 
-
     @FXML
     private TextArea txtArea;
 
@@ -54,7 +51,7 @@ public class LoginController implements Initializable {
     }
 
     @FXML
-    protected void buttonClickEvent() throws IOException {
+    protected void buttonClickEvent() {
         if (!this.fireEvent()) return;
         Stage primaryStage = (Stage) pane.getScene().getWindow();
         primaryStage.setScene(this.chatStage.getScene());
@@ -67,7 +64,7 @@ public class LoginController implements Initializable {
 
     private boolean fireEvent() {
         if (!this.textbox.getText().isEmpty() && VerifyHelper.isValidIDName(this.textbox.getText())) {
-            ChatClientMain.EVENT_BUS.unsafeFireAndForget(new PlayerJoinEvent(this.textbox.getText()));
+            // ChatClientMain.EVENT_BUS.unsafeFireAndForget(new PlayerJoinEvent(this.textbox.getText()));
             return true;
         }
 
