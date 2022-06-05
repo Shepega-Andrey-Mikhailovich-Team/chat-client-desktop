@@ -88,7 +88,7 @@ public class LoginController implements Initializable {
         pane.getChildren().add(jfxRippler);
 
         FXMLLoader fxmlLoader = new FXMLLoader(IOHelper.getResourceURL("dialog/chat.fxml"));
-        this.chatScene = new Scene(fxmlLoader.load(), 600, 417, Color.TRANSPARENT);
+        this.chatScene = new Scene(fxmlLoader.load(), 600, 411, Color.TRANSPARENT);
         this.chatScene.getStylesheets().add(IOHelper.getResourceURL("dialog/chat.css").toExternalForm());
     }
 

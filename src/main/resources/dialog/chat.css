@@ -1,7 +1,7 @@
 #pane {
     -fx-background-color: #191919;
-    -fx-background-radius: 15;
-    -fx-border-radius: 15;
+    -fx-background-radius: 15 0 15 0;
+    -fx-border-radius: 15 0 15 0;
 }
 
 #button {
@@ -20,6 +20,20 @@
 #txtArea {
     -fx-background-color: #FDEBAE;
 }
+
+#txtArea .content {
+    -fx-background-color: #FDEBAE;
+}
+
+#txtArea .scroll-pane {
+    -fx-hbar-policy: NEVER;
+    -fx-vbar-policy: NEVER;
+}
+
+#enterText {
+    -fx-background-color: #FDEBAE;
+}
+
 
 .label {
     -fx-text-fill: #E58D57;

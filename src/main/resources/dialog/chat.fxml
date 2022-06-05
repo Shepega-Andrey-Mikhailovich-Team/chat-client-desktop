@@ -9,11 +9,17 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="417.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.chat.controller.ChatController">
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="411.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.chat.controller.ChatController">
     <children>
       <Pane fx:id="movehandler" layoutX="-1.0" prefHeight="54.0" prefWidth="536.0" />
-        <TextArea fx:id="txtArea" editable="false" layoutY="53.0" prefHeight="320.0" prefWidth="600.0" />
-        <TextField fx:id="txtFl" layoutX="14.0" layoutY="383.0" prefHeight="25.0" prefWidth="536.0" />
+        <TextArea fx:id="txtArea" editable="false" layoutY="53.0" prefHeight="320.0" prefWidth="600.0" wrapText="true">
+         <font>
+            <Font size="14.0" />
+         </font></TextArea>
+        <TextField fx:id="enterText" layoutX="-1.0" layoutY="375.0" prefHeight="36.0" prefWidth="547.0">
+         <font>
+            <Font size="16.0" />
+         </font></TextField>
         <Label fx:id="label1" layoutX="61.0" prefHeight="33.0" prefWidth="147.0" text="Shepega Group">
             <font>
                 <Font name="JetBrains Mono Extra Bold Nerd Font Complete" size="18.0" />
@@ -29,7 +35,7 @@
                 <Font name="JetBrains Mono Medium Medium Nerd Font Complete Mono" size="14.0" />
             </font>
         </Label>
-      <ImageView fx:id="exit" fitHeight="22.0" fitWidth="26.0" layoutX="572.0" layoutY="6.0" onMouseClicked="#onExit" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="exit" fitHeight="22.0" fitWidth="26.0" layoutX="573.0" layoutY="4.0" onMouseClicked="#onExit" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/img/close.png" />
          </image>
@@ -37,7 +43,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <ImageView fx:id="s" fitHeight="33.0" fitWidth="43.0" layoutX="559.0" layoutY="378.0" onMouseClicked="#send" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="s" fitHeight="33.0" fitWidth="43.0" layoutX="556.0" layoutY="375.0" onMouseClicked="#send" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/img/send.png" />
          </image>
@@ -45,7 +51,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <ImageView fx:id="collapse" fitHeight="22.0" fitWidth="26.0" layoutX="542.0" layoutY="6.0" onMouseClicked="#onMinimize" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="collapse" fitHeight="22.0" fitWidth="26.0" layoutX="543.0" layoutY="4.0" onMouseClicked="#onMinimize" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/img/minimize.png" />
          </image>

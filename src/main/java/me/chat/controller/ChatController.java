@@ -4,6 +4,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -20,6 +21,9 @@ public class ChatController implements Initializable {
 
     @FXML
     private Pane movehandler;
+
+    @FXML
+    private TextField enterText;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -43,6 +47,8 @@ public class ChatController implements Initializable {
 
     @FXML
     protected void send() {
+        if (!this.enterText.getText().isEmpty())
+            this.txtArea.appendText(this.enterText.getText() + "\n");
 
     }
 }
