@@ -5,6 +5,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -49,6 +51,12 @@ public class ChatController implements Initializable {
     protected void send() {
         if (!this.enterText.getText().isEmpty())
             this.txtArea.appendText(this.enterText.getText() + "\n");
+    }
 
+    @FXML
+    protected void enter(KeyEvent event) {
+        if (event.getCode() == KeyCode.ENTER)
+            this.send();
     }
 }
+
