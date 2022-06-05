@@ -54,7 +54,7 @@ public class LoginController implements Initializable {
         Stage primaryStage = (Stage) pane.getScene().getWindow();
         if (this.chatScene != null) {
             primaryStage.setScene(this.chatScene);
-            
+
             // Move handler
             this.chatScene.setOnMousePressed(pressEvent -> chatScene.setOnMouseDragged(dragEvent -> {
                 primaryStage.setX(dragEvent.getScreenX() - pressEvent.getSceneX());
@@ -69,7 +69,7 @@ public class LoginController implements Initializable {
     }
 
     private boolean fireEvent() {
-        if (!this.textbox.getText().isEmpty() && VerifyHelper.isValidIDName(this.textbox.getText())) {
+        if (!this.textbox.getText().isEmpty() && VerifyHelper.isValidUsername(this.textbox.getText())) {
             // ChatClientMain.EVENT_BUS.unsafeFireAndForget(new PlayerJoinEvent(this.textbox.getText()));
             return true;
         }

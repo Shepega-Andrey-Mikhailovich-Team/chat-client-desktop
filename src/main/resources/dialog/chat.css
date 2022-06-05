@@ -1,4 +1,3 @@
-
 #pane {
     -fx-background-color: #191919;
     -fx-background-radius: 15;
@@ -28,3 +27,6 @@
     -fx-text-fill: #E58D57;
 }
 
+#exit {
+    -fx-background-color: #E58D57;
+}
