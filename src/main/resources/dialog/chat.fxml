@@ -9,10 +9,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="440.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.chat.controller.ChatController">
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="417.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="me.chat.controller.ChatController">
     <children>
-        <TextArea fx:id="txtArea" layoutY="53.0" prefHeight="320.0" prefWidth="600.0" />
-        <TextField fx:id="txtFl" layoutX="12.0" layoutY="386.0" prefHeight="43.0" prefWidth="505.0" />
+      <Pane fx:id="movehandler" layoutX="-1.0" prefHeight="54.0" prefWidth="536.0" />
+        <TextArea fx:id="txtArea" editable="false" layoutY="53.0" prefHeight="320.0" prefWidth="600.0" />
+        <TextField fx:id="txtFl" layoutX="14.0" layoutY="383.0" prefHeight="25.0" prefWidth="536.0" />
         <Label fx:id="label1" layoutX="61.0" prefHeight="33.0" prefWidth="147.0" text="Shepega Group">
             <font>
                 <Font name="JetBrains Mono Extra Bold Nerd Font Complete" size="18.0" />
@@ -36,7 +37,7 @@
             <Cursor fx:constant="HAND" />
          </cursor>
       </ImageView>
-      <ImageView fitHeight="33.0" fitWidth="43.0" layoutX="555.0" layoutY="391.0" onMouseClicked="#send" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="s" fitHeight="33.0" fitWidth="43.0" layoutX="559.0" layoutY="378.0" onMouseClicked="#send" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../assets/img/send.png" />
          </image>

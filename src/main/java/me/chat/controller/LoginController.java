@@ -52,15 +52,8 @@ public class LoginController implements Initializable {
     protected void buttonClickEvent() {
         if (!this.fireEvent()) return;
         Stage primaryStage = (Stage) pane.getScene().getWindow();
-        if (this.chatScene != null) {
+        if (this.chatScene != null)
             primaryStage.setScene(this.chatScene);
-
-            // Move handler
-            this.chatScene.setOnMousePressed(pressEvent -> chatScene.setOnMouseDragged(dragEvent -> {
-                primaryStage.setX(dragEvent.getScreenX() - pressEvent.getSceneX());
-                primaryStage.setY(dragEvent.getScreenY() - pressEvent.getSceneY());
-            }));
-        }
     }
 
     @FXML
@@ -95,7 +88,7 @@ public class LoginController implements Initializable {
         pane.getChildren().add(jfxRippler);
 
         FXMLLoader fxmlLoader = new FXMLLoader(IOHelper.getResourceURL("dialog/chat.fxml"));
-        this.chatScene = new Scene(fxmlLoader.load(), 604, 440, Color.TRANSPARENT);
+        this.chatScene = new Scene(fxmlLoader.load(), 600, 417, Color.TRANSPARENT);
         this.chatScene.getStylesheets().add(IOHelper.getResourceURL("dialog/chat.css").toExternalForm());
     }
 

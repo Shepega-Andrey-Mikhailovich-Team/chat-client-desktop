@@ -18,9 +18,16 @@ public class ChatController implements Initializable {
     @FXML
     private TextArea txtArea;
 
+    @FXML
+    private Pane movehandler;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        this.movehandler.setOnMousePressed(pressEvent -> movehandler.setOnMouseDragged(dragEvent -> {
+            Stage primaryStage = (Stage) movehandler.getScene().getWindow();
+            primaryStage.setX(dragEvent.getScreenX() - pressEvent.getSceneX());
+            primaryStage.setY(dragEvent.getScreenY() - pressEvent.getSceneY());
+        }));
     }
 
     @FXML
