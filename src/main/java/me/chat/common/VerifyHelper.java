@@ -20,8 +20,8 @@ public final class VerifyHelper {
 
     public static final Predicate<String> NOT_EMPTY = s -> !s.isEmpty();
 
-    public static final Pattern USERNAME_PATTERN = Pattern.compile("[a-zA-Zа-яА-Я0-9_.\\-]{1,16}");
-    
+    public static final Pattern USERNAME_PATTERN = Pattern.compile("[a-zA-Zа-яА-Я0-9_.\\-]{1,32}");
+
     public static <K, V> V getMapValue(Map<K, V> map, K key, String error) {
         return verify(map.get(key), Objects::nonNull, error);
     }

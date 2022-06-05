@@ -45,20 +45,26 @@ public class LoginController implements Initializable {
     @FXML
     protected void enterPressedEvent(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER)
-            this.fireEvent();
+            this.enterUser();
     }
 
     @FXML
     protected void buttonClickEvent() {
-        if (!this.fireEvent()) return;
-        Stage primaryStage = (Stage) pane.getScene().getWindow();
-        if (this.chatScene != null)
-            primaryStage.setScene(this.chatScene);
+        this.enterUser();
     }
 
     @FXML
     protected void hyperlink() throws URISyntaxException, IOException {
         Desktop.getDesktop().browse(new URI("https://github.com/Shepega-Andrey-Mikhailovich-Team"));
+    }
+
+    private void enterUser() {
+        if (!this.fireEvent()) return;
+        Stage primaryStage = (Stage) pane.getScene().getWindow();
+        if (this.chatScene != null) {
+            primaryStage.setScene(this.chatScene);
+            primaryStage.centerOnScreen();
+        }
     }
 
     private boolean fireEvent() {
