@@ -49,8 +49,10 @@ public class ChatController implements Initializable {
 
     @FXML
     protected void send() {
-        if (!this.enterText.getText().isEmpty())
+        if (!this.enterText.getText().isEmpty()) {
             this.txtArea.appendText(this.enterText.getText() + "\n");
+            this.enterText.clear();
+        }
     }
 
     @FXML
