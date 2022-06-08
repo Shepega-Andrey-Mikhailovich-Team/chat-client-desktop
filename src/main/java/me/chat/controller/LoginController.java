@@ -16,6 +16,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import lombok.SneakyThrows;
+import me.chat.ChatClientMain;
+import me.chat.Connector;
 import me.chat.common.IOHelper;
 import me.chat.common.VerifyHelper;
 
@@ -69,7 +71,12 @@ public class LoginController implements Initializable {
 
     private boolean fireEvent() {
         if (!this.textbox.getText().isEmpty() && VerifyHelper.isValidUsername(this.textbox.getText())) {
-            // ChatClientMain.EVENT_BUS.unsafeFireAndForget(new PlayerJoinEvent(this.textbox.getText()));
+            ChatClientMain.setUserName(this.textbox.getText());
+            Connector connector = Connector.getInstance();
+
+            if (connector == null) return false;
+            connector.start();
+            connector.setName(this.textbox.getText());
             return true;
         }
 
