@@ -4,6 +4,7 @@ import io.netty.buffer.ByteBuf;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Getter
@@ -44,12 +45,12 @@ public abstract class AbstractPacket {
 
         byte[] b = new byte[length];
         buf.readBytes(b);
-        return new String(b);
+        return new String(b, StandardCharsets.UTF_8);
     }
 
     public static void writeString(ByteBuf buf, String string) {
         if (string != null) {
-            byte[] b = string.getBytes();
+            byte[] b = string.getBytes(StandardCharsets.UTF_8);
             buf.writeShort(b.length);
             buf.writeBytes(b);
             return;
