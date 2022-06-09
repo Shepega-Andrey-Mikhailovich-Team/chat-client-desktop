@@ -31,6 +31,7 @@ dependencies {
     implementation group: 'org.yaml', name: 'snakeyaml', version: '1.29'
 
     implementation group: 'io.netty', name: 'netty-all', version: '4.1.68.Final'
+
 }
 
 def targetJavaVersion = 8

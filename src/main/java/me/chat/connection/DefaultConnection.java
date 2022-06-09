@@ -6,5 +6,5 @@ public interface DefaultConnection {
 
     void join();
 
-    void leave();
+    void leave(boolean login);
 }

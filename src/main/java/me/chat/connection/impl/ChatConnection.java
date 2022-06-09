@@ -8,7 +8,6 @@ import lombok.SneakyThrows;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
 import me.chat.Connector;
-import me.chat.common.LogHelper;
 import me.chat.connection.DefaultConnection;
 import me.chat.protocol.AbstractPacket;
 import me.chat.protocol.LoginPacket;
@@ -44,12 +43,14 @@ public class ChatConnection implements DefaultConnection {
     }
 
     @Override
-    public void leave() {
+    public void leave(boolean login) {
+        if (this.connector != null)
+            this.connector.stop();
         // Leave packet
     }
 
     public void sendPacket(AbstractPacket abstractPacket) {
-        LogHelper.info(String.valueOf(channel.channel().isActive()));
-        channel.channel().writeAndFlush(abstractPacket);
+        if (this.channel != null && this.channel.channel().isActive())
+            channel.writeAndFlush(abstractPacket);
     }
 }

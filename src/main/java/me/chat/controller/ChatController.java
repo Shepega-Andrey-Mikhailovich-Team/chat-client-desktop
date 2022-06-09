@@ -50,7 +50,7 @@ public class ChatController implements Initializable {
 
     @FXML
     protected void onExit() {
-        // Connector.getInstance().stop();
+        ChatClientMain.getChatConnection().leave(false);
         Platform.exit();
     }
 
@@ -63,14 +63,12 @@ public class ChatController implements Initializable {
     @FXML
     protected void send() {
         if (!this.enterText.getText().isEmpty()) {
-            // this.txtArea.appendText();
-
             ChatConnection chatConnection = ChatClientMain.getChatConnection();
             UserMessagePacket packet = new UserMessagePacket();
             packet.setUserName(chatConnection.getUserName());
-            packet.setMessage(this.enterText.getText() + "\n");
+            packet.setMessage(this.enterText.getText());
             this.enterText.clear();
-            chatConnection.getConnector().sendPacket(packet);
+            chatConnection.sendPacket(packet);
         }
     }
 

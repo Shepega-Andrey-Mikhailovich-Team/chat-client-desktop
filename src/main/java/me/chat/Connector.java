@@ -47,7 +47,7 @@ public class Connector {
     @Getter
     private String userName;
 
-    private final String hostname = "localhost";
+    private final String hostname = "159.89.105.189";
     private final int port = 5000;
 
     @Getter

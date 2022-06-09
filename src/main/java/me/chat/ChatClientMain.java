@@ -6,9 +6,6 @@ import me.chat.connection.impl.ChatConnection;
 import me.chat.dialog.ErrorDialog;
 import me.chat.dialog.LoginDialog;
 
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
 public class ChatClientMain implements Runnable {
 
     @Getter
@@ -17,11 +14,8 @@ public class ChatClientMain implements Runnable {
     @Getter
     private static ChatConnection chatConnection;
 
-    public static final Path WORKING_DIR = Paths.get(System.getProperty("user.dir"));
-
     public ChatClientMain() {
         instance = this;
-        // EVENT_BUS.register(PlayerListener.class);
     }
 
     public static void main(String[] args) {
@@ -31,7 +25,7 @@ public class ChatClientMain implements Runnable {
     @Override
     public void run() {
         if (Float.parseFloat(System.getProperty("java.class.version")) < 52.0) {
-            ErrorDialog.show("Java Version", new Throwable("Need Java 8+"), "Для запуска потрібна jdk 8+");
+            ErrorDialog.show("Java Version", new Throwable("Need Java 8"), "Для запуска потрібна jdk 8");
             return;
         }
 

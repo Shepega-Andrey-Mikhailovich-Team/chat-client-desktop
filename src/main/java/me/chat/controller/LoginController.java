@@ -16,6 +16,7 @@ import lombok.SneakyThrows;
 import me.chat.ChatClientMain;
 import me.chat.common.VerifyHelper;
 import me.chat.connection.impl.ChatConnection;
+import me.chat.dialog.effects.ShakeTransition;
 
 import java.awt.*;
 import java.io.IOException;
@@ -60,25 +61,20 @@ public class LoginController implements Initializable {
     }
 
     private void enterUser() {
-        if (!this.fireEvent()) return;
-
-    }
-
-    private boolean fireEvent() {
         if (!this.textbox.getText().isEmpty() && VerifyHelper.isValidUsername(this.textbox.getText())) {
             ChatConnection chatConnection = ChatClientMain.getChatConnection();
             chatConnection.setUserName(this.textbox.getText().trim());
             chatConnection.join();
-            return true;
+            return;
         }
 
-        // shake textbox and label
-
-        return false;
+        ShakeTransition shakeTransition = new ShakeTransition(this.button);
+        shakeTransition.playFromStart();
     }
 
     @FXML
     protected void onExit() {
+        ChatClientMain.getChatConnection().leave(true);
         Platform.exit();
     }
 
