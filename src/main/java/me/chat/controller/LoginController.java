@@ -2,24 +2,19 @@ package me.chat.controller;
 
 import com.jfoenix.controls.JFXRippler;
 import javafx.application.Platform;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
-import javafx.stage.Stage;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.SneakyThrows;
-import me.chat.ChatClientMain;
-import me.chat.Connector;
-import me.chat.common.IOHelper;
 import me.chat.common.VerifyHelper;
+import me.chat.connection.impl.ChatConnection;
 
 import java.awt.*;
 import java.io.IOException;
@@ -30,7 +25,9 @@ import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
 
-    private Scene chatScene;
+    @Setter
+    @Getter
+    private static LoginController instance;
 
     @FXML
     private TextField textbox;
@@ -38,6 +35,7 @@ public class LoginController implements Initializable {
     @FXML
     private Button button;
 
+    @Getter
     @FXML
     private Pane pane;
 
@@ -62,21 +60,14 @@ public class LoginController implements Initializable {
 
     private void enterUser() {
         if (!this.fireEvent()) return;
-        Stage primaryStage = (Stage) pane.getScene().getWindow();
-        if (this.chatScene != null) {
-            primaryStage.setScene(this.chatScene);
-            primaryStage.centerOnScreen();
-        }
+
     }
 
     private boolean fireEvent() {
         if (!this.textbox.getText().isEmpty() && VerifyHelper.isValidUsername(this.textbox.getText())) {
-            ChatClientMain.setUserName(this.textbox.getText());
-            Connector connector = Connector.getInstance();
-
-            if (connector == null) return false;
-            connector.start();
-            connector.setName(this.textbox.getText());
+            ChatConnection chatConnection = new ChatConnection();
+            chatConnection.setUserName(this.textbox.getText().trim());
+            chatConnection.join();
             return true;
         }
 
@@ -100,11 +91,16 @@ public class LoginController implements Initializable {
         jfxRippler.setLayoutY(228);
         pane.getChildren().add(jfxRippler);
 
-        FXMLLoader fxmlLoader = new FXMLLoader(IOHelper.getResourceURL("dialog/chat.fxml"));
-        this.chatScene = new Scene(fxmlLoader.load(), 600, 411, Color.TRANSPARENT);
-        this.chatScene.getStylesheets().add(IOHelper.getResourceURL("dialog/chat.css").toExternalForm());
+        LoginController.setupInstance(this);
     }
 
-    public void handleNewWindow(ActionEvent actionEvent) {
+    public static void setupInstance(LoginController instance) {
+        if (instance == null)
+            throw new RuntimeException("Instance cannot be null!");
+
+        if (LoginController.getInstance() != null)
+            throw new RuntimeException("Instance already set!");
+
+        LoginController.setInstance(instance);
     }
 }

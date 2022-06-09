@@ -2,16 +2,18 @@ package me.chat.netty;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import me.chat.Connector;
+import lombok.RequiredArgsConstructor;
 import me.chat.common.LogHelper;
+import me.chat.connection.impl.ChatConnection;
 import me.chat.protocol.AbstractPacket;
 
+@RequiredArgsConstructor
 public class PacketHandler extends SimpleChannelInboundHandler<AbstractPacket> {
 
-    private final Connector connector = Connector.getInstance();
+    private final ChatConnection chatConnection;
 
     public void channelInactive(ChannelHandlerContext ctx) {
-        this.connector.onDisconnect();
+        this.chatConnection.getConnector().onDisconnect();
     }
 
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
@@ -21,10 +23,7 @@ public class PacketHandler extends SimpleChannelInboundHandler<AbstractPacket> {
     }
 
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, AbstractPacket packet) {
-        if (Connector.isDebug())
-            LogHelper.info("PacketHandler has read: " + packet.toString());
-
-        this.connector.getListenerManager().handleListeners(packet);
+        this.chatConnection.getConnector().getListenerManager().handleListeners(packet);
     }
 }
 

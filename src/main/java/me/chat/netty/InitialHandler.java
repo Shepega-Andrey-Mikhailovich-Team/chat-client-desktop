@@ -3,27 +3,32 @@ package me.chat.netty;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
-import me.chat.Connector;
+import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import me.chat.common.LogHelper;
+import me.chat.connection.impl.ChatConnection;
 import me.chat.protocol.AbstractPacket;
 import me.chat.protocol.HandshakePacket;
 
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 
+@RequiredArgsConstructor
 public class InitialHandler extends SimpleChannelInboundHandler<AbstractPacket> {
 
-    private final Connector connector = Connector.getInstance();
+    private final ChatConnection chatConnection;
 
+    @SneakyThrows
     public void channelActive(ChannelHandlerContext ctx) {
-        LogHelper.info("InitialHandler has connected! Sending handshake packet...");
+        LogHelper.info("InitialHandler has connected...");
         HandshakePacket packet = new HandshakePacket();
-        packet.setName(connector.getName());
+        packet.setHostname(InetAddress.getLocalHost().getHostAddress());
         ctx.writeAndFlush(packet);
     }
 
     public void channelInactive(ChannelHandlerContext ctx) {
-        LogHelper.info("InitialHandler has disconneted!");
-        this.connector.reconnect();
+        LogHelper.info("InitialHandler has disconnected!");
+        this.chatConnection.getConnector().reconnect();
     }
 
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
@@ -33,23 +38,14 @@ public class InitialHandler extends SimpleChannelInboundHandler<AbstractPacket> 
 
     protected void channelRead0(ChannelHandlerContext channelHandlerContext, AbstractPacket packet) {
         if (packet instanceof HandshakePacket) {
-
-            HandshakePacket handshakePacket = (HandshakePacket) packet;
-            if (!handshakePacket.isAllowed()) {
-                LogHelper.info("Channel close! Disconnecting...");
-                LogHelper.error(handshakePacket.getCancelReason());
-                channelHandlerContext.close();
-                return;
-            }
-
             LogHelper.info("InitialHandler has read Handshake! Changing pipeline...");
-            this.connector.setName(((HandshakePacket) packet).getName());
             channelHandlerContext.pipeline().removeLast();
-            channelHandlerContext.pipeline().addLast(new PacketHandler());
-        } else {
-            LogHelper.info("First packet must be Handshake! Disconnecting...");
-            channelHandlerContext.close();
+            channelHandlerContext.pipeline().addLast(new PacketHandler(this.chatConnection));
+            return;
         }
+
+        LogHelper.info("First packet must be Handshake! Disconnecting...");
+        channelHandlerContext.close();
     }
 
     public static String getChannelIp(Channel channel) {

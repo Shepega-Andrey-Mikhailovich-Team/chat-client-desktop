@@ -10,26 +10,16 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import lombok.Getter;
-import me.chat.ChatClientMain;
-import me.chat.Connector;
-import me.chat.protocol.UserMessagePacket;
+import lombok.Setter;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class ChatController implements Initializable {
 
-    public static ChatController instance;
-
-    public static void setInstance(ChatController instance) {
-        if (instance == null)
-            throw new RuntimeException("Instance cannot be null!");
-
-        if (ChatController.instance != null)
-            throw new RuntimeException("Instance already set!");
-
-        ChatController.instance = instance;
-    }
+    @Setter
+    @Getter
+    private static ChatController instance;
 
     @FXML
     Pane pane;
@@ -52,12 +42,12 @@ public class ChatController implements Initializable {
             primaryStage.setY(dragEvent.getScreenY() - pressEvent.getSceneY());
         }));
 
-        ChatController.setInstance(this);
+        ChatController.setupInstance(this);
     }
 
     @FXML
     protected void onExit() {
-        Connector.getInstance().stop();
+        // Connector.getInstance().stop();
         Platform.exit();
     }
 
@@ -72,11 +62,11 @@ public class ChatController implements Initializable {
         if (!this.enterText.getText().isEmpty()) {
             // this.txtArea.appendText();
 
-            UserMessagePacket packet = new UserMessagePacket();
-            packet.setUserName(ChatClientMain.getUserName());
-            packet.setMessage(this.enterText.getText() + "\n");
-            this.enterText.clear();
-            Connector.getInstance().sendPacket(packet);
+//            UserMessagePacket packet = new UserMessagePacket();
+//            packet.setUserName(ChatClientMain.getUserName());
+//            packet.setMessage(this.enterText.getText() + "\n");
+//            this.enterText.clear();
+//            Connector.getInstance().sendPacket(packet);
         }
     }
 
@@ -84,6 +74,16 @@ public class ChatController implements Initializable {
     protected void enter(KeyEvent event) {
         if (event.getCode() == KeyCode.ENTER)
             this.send();
+    }
+
+    public static void setupInstance(ChatController instance) {
+        if (instance == null)
+            throw new RuntimeException("Instance cannot be null!");
+
+        if (ChatController.getInstance() != null)
+            throw new RuntimeException("Instance already set!");
+
+        ChatController.setInstance(instance);
     }
 }
 

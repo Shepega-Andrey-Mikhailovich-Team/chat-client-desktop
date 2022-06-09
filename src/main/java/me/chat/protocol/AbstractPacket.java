@@ -106,7 +106,8 @@ public abstract class AbstractPacket {
 
     static {
         packets.put(0, HandshakePacket.class);
-        packets.put(1, UserMessagePacket.class);
+        packets.put(1, LoginPacket.class);
+        packets.put(2, UserMessagePacket.class);
     }
 }
 
