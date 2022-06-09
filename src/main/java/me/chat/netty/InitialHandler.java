@@ -41,6 +41,7 @@ public class InitialHandler extends SimpleChannelInboundHandler<AbstractPacket> 
             LogHelper.info("InitialHandler has read Handshake! Changing pipeline...");
             channelHandlerContext.pipeline().removeLast();
             channelHandlerContext.pipeline().addLast(new PacketHandler(this.chatConnection));
+            this.chatConnection.setChannel(channelHandlerContext);
             return;
         }
 

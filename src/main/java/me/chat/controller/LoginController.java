@@ -13,6 +13,7 @@ import javafx.scene.paint.Paint;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
+import me.chat.ChatClientMain;
 import me.chat.common.VerifyHelper;
 import me.chat.connection.impl.ChatConnection;
 
@@ -65,7 +66,7 @@ public class LoginController implements Initializable {
 
     private boolean fireEvent() {
         if (!this.textbox.getText().isEmpty() && VerifyHelper.isValidUsername(this.textbox.getText())) {
-            ChatConnection chatConnection = new ChatConnection();
+            ChatConnection chatConnection = ChatClientMain.getChatConnection();
             chatConnection.setUserName(this.textbox.getText().trim());
             chatConnection.join();
             return true;

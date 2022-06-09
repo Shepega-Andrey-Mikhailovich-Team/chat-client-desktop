@@ -14,7 +14,7 @@ public class UserMessagePacket extends AbstractPacket {
     String userName, message;
 
     public UserMessagePacket() {
-        super(1);
+        super(2);
     }
 
     @Override

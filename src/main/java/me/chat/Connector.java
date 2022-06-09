@@ -1,5 +1,6 @@
 package me.chat;
 
+import com.sun.javafx.application.PlatformImpl;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFutureListener;
@@ -65,15 +66,8 @@ public class Connector {
             LoginPacket packet = (LoginPacket) abstractPacket;
             if (!packet.isAllowed())
                 return;
-            
-            FXMLLoader fxmlLoader = new FXMLLoader(IOHelper.getResourceURL("dialog/chat.fxml"));
-            Scene chatScene = new Scene(fxmlLoader.load(), 600, 411, Color.TRANSPARENT);
-            chatScene.getStylesheets().add(IOHelper.getResourceURL("dialog/chat.css").toExternalForm());
-            Stage primaryStage = (Stage) LoginController.getInstance().getPane().getScene().getWindow();
-            if (chatScene != null) {
-                primaryStage.setScene(chatScene);
-                primaryStage.centerOnScreen();
-            }
+
+            PlatformImpl.runLater(this::startChat);
         });
 
 
@@ -86,6 +80,18 @@ public class Connector {
             if (!this.connect())
                 this.reconnect();
         });
+    }
+
+    @SneakyThrows
+    private void startChat() {
+        FXMLLoader fxmlLoader = new FXMLLoader(IOHelper.getResourceURL("dialog/chat.fxml"));
+        Scene chatScene = new Scene(fxmlLoader.load(), 600, 411, Color.TRANSPARENT);
+        chatScene.getStylesheets().add(IOHelper.getResourceURL("dialog/chat.css").toExternalForm());
+        Stage primaryStage = (Stage) LoginController.getInstance().getPane().getScene().getWindow();
+        if (chatScene != null) {
+            primaryStage.setScene(chatScene);
+            primaryStage.centerOnScreen();
+        }
     }
 
     protected boolean connect() {

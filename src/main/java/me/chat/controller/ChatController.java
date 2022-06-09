@@ -11,6 +11,9 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.Setter;
+import me.chat.ChatClientMain;
+import me.chat.connection.impl.ChatConnection;
+import me.chat.protocol.UserMessagePacket;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -62,11 +65,12 @@ public class ChatController implements Initializable {
         if (!this.enterText.getText().isEmpty()) {
             // this.txtArea.appendText();
 
-//            UserMessagePacket packet = new UserMessagePacket();
-//            packet.setUserName(ChatClientMain.getUserName());
-//            packet.setMessage(this.enterText.getText() + "\n");
-//            this.enterText.clear();
-//            Connector.getInstance().sendPacket(packet);
+            ChatConnection chatConnection = ChatClientMain.getChatConnection();
+            UserMessagePacket packet = new UserMessagePacket();
+            packet.setUserName(chatConnection.getUserName());
+            packet.setMessage(this.enterText.getText() + "\n");
+            this.enterText.clear();
+            chatConnection.getConnector().sendPacket(packet);
         }
     }
 
